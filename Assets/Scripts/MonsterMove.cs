@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class MonsterMove : MonoBehaviour
 {
+    [Header("몬스터 설정")]
+    public string monsterName; //종 이름
+    public int hp = 10; 
+    public float speed = 2f; //이속
+
     public Transform[] waypoints; //몬스터 이동경로 설정
-    public float speed = 2f; //이동 속도
     int index = 0; //경로 번호
 
     private void Start()
     {
-        //하이어라키에서 "Waypoints"라는 이름의 부모 오브젝트를 찾음
+        //Waypoints 오브젝트 
         GameObject waypointGroup = GameObject.Find("Waypoints");
 
         if (waypointGroup != null)
         {
-            //자식(Point_0, Point_1 등)의 개수만큼 배열 크기를 결정
+            //Point_ 개수만큼 배열 크기를 결정
             waypoints = new Transform[waypointGroup.transform.childCount];
 
-            //자식들의 위치(Transform) 정보를 하나씩 꺼내서 배열에 추가
+            //위치 정보를 하나씩 배열에 추가
             for (int i = 0; i < waypointGroup.transform.childCount; i++)
             {
                 waypoints[i] = waypointGroup.transform.GetChild(i);
