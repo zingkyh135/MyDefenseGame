@@ -9,9 +9,39 @@ public class MonsterMove : MonoBehaviour
     public int hp = 10; 
     public float speed = 2f; //이속
 
+    [Header("사망 시 분열 설정")]
+    public bool canSplit = false; //분열 여부
+    public GameObject splitPrefab; //분열 시 출현 몬스터
+    public int splitCount = 2; //분열 수
+
     public Transform[] waypoints; //몬스터 이동경로 설정
     int index = 0; //경로 번호
 
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        if(canSplit && splitPrefab != null) //만약 분열 가능하고 프리펩이 있을 때
+        {
+            for(int i = 0; i < splitCount; i++)
+            {
+                GameObject miniMonster = Instantiate(splitPrefab, transform.position, Quaternion.identity);
+                //작은 몬스터는 현제 위치에 스폰
+                MonsterMove miniScript = miniMonster.GetComponent<MonsterMove>(); //분열체는 MonsterMove를 받음
+                if (miniScript != null)
+                {
+                    miniScript.index = this.index; //분열체의 경로는 현제 경로
+                }
+            }
+        }
+        Destroy(gameObject); 
+    }
     private void Start()
     {
         //Waypoints 오브젝트 

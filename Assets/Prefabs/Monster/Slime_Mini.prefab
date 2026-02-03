@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090231106106698588, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: m_Name
-      value: Slime
+      value: Slime_Mini
       objectReference: {fileID: 0}
     - target: {fileID: 3464720324851485010, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: m_Color.b
@@ -23,6 +23,18 @@ PrefabInstance:
     - target: {fileID: 3464720324851485010, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: m_Color.r
       value: 0.058823526
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763898088191085458, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763898088191085458, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763898088191085458, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7763898088191085458, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65,8 +77,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8895619939609604733, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
+      propertyPath: hp
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8895619939609604733, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: speed
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8895619939609604733, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: canSplit
@@ -75,9 +91,14 @@ PrefabInstance:
     - target: {fileID: 8895619939609604733, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
       propertyPath: splitPrefab
       value: 
-      objectReference: {fileID: 4377198698770275887, guid: 36372d486b3e2734d84fd9f9e0e803f8, type: 3}
+      objectReference: {fileID: 4377198698770275887}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
+--- !u!1 &4377198698770275887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2090231106106698588, guid: a2f45bc266f48bf479e44a586651d072, type: 3}
+  m_PrefabInstance: {fileID: 2431681134660629875}
+  m_PrefabAsset: {fileID: 0}
