@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2fb72bc82573b43a910f033dc4dad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterName: 
+  hp: 10
+  speed: 4
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -110,4 +113,3 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 2

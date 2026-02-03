@@ -47,6 +47,10 @@ public class MonsterMove : MonoBehaviour
         }
         else //경로 번호보다 높거나 같으면
         {
+            if (LifeManager.instance != null)
+            {
+                LifeManager.instance.DecreaseLife();
+            }
             Destroy(gameObject); //파괴
         }
     }
