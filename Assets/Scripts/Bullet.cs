@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("설정")]
     public float speed = 10f; //총알 속도
     public int towerDamage; //타워 공격력
     private Transform target; //타겟

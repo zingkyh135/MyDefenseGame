@@ -13,6 +13,9 @@ public class MonsterMove : MonoBehaviour
     public GameObject splitPrefab; //분열 시 출현 몬스터
     public int splitCount = 2; //분열 수
 
+    [Header("처치 골드 설정")]
+    public int goldReward = 10;
+
     public Transform[] waypoints; //몬스터 이동경로 설정
     int index = 0; //경로 번호
 
@@ -26,7 +29,12 @@ public class MonsterMove : MonoBehaviour
     }
     void Die()
     {
-        if(canSplit && splitPrefab != null) //만약 분열 가능하고 프리펩이 있을 때
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.AddGold(goldReward); //게임메니저 AddGold실행 gold + goldReward
+        }
+
+        if (canSplit && splitPrefab != null) //만약 분열 가능하고 프리펩이 있을 때
         {
             for(int i = 0; i < splitCount; i++)
             {
