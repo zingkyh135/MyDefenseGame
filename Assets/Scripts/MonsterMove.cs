@@ -5,7 +5,6 @@ using UnityEngine;
 public class MonsterMove : MonoBehaviour
 {
     [Header("몬스터 설정")]
-    public string monsterName; //종 이름
     public int hp = 10; 
     public float speed = 2f; //이속
 
@@ -42,6 +41,7 @@ public class MonsterMove : MonoBehaviour
         }
         Destroy(gameObject); 
     }
+
     private void Start()
     {
         //Waypoints 오브젝트 
