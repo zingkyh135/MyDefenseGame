@@ -147,8 +147,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6922191400406438775}
   - component: {fileID: 1879862446581793796}
+  - component: {fileID: 7255856221800414275}
+  - component: {fileID: -7055774026903554551}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: Base_Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,6 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8279871f9d77d4999cebc79fdd70c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerName: towerName
+  tier: 1
   range: 1
   monsterLayer:
     serializedVersion: 2
@@ -190,4 +194,37 @@ MonoBehaviour:
   firePoint: {fileID: 400163686600986022}
   bulletPrefab: {fileID: 1471768122997264188, guid: fa84f0f447180f34ea36828d79f84911, type: 3}
   fireRate: 1
-  damage: 10
+  damage: 50
+--- !u!114 &7255856221800414275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603320579966459535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874728e5726dbaf469f205ce4e0c11a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &-7055774026903554551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603320579966459535}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

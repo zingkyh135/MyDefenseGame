@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    [Header("타워 합성 설정")]
+    public string towerName; //타워 이름
+    public int tier = 1; //타워 등급
+
     [Header("타워 설정")]
     public float range = 3f; //사거리
     public LayerMask monsterLayer; //감지할 레이어
@@ -32,6 +36,13 @@ public class Tower : MonoBehaviour
         {
             bulletScript.See(target);
             bulletScript.towerDamage = damage;
+        }
+    }
+    void OnMouseDown()
+    {
+        if (UIManager.instance != null)
+        {
+            UIManager.instance.ShowTower(this);
         }
     }
     void Update()
