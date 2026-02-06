@@ -34,6 +34,12 @@ public class UIManager : MonoBehaviour
             infoPanel.SetActive(false);
         }
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
 
 }
