@@ -9,7 +9,8 @@ public class LifeManager : MonoBehaviour
 
     [Header("설정")]
     public int life = 10; //시작 목숨
-    public TextMeshProUGUI lifeText; // 화면 표시할 UI 텍스트
+    public TextMeshProUGUI lifeText; //화면에 표시되는 라이프 텍스트
+    public GameObject gameOverPanel; //게임오버 시 나오는 창
 
     private void Awake()
     {
@@ -23,25 +24,47 @@ public class LifeManager : MonoBehaviour
     {
         if (lifeText != null)
         {
+            
             lifeText.text = "LIFE: " + life;
         }
     }
 
     private void Start()
     {
+        Time.timeScale = 1f;
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+
         UpdateLifeUI();
     }
 
     // 목숨을 깎는 함수
     public void DecreaseLife()
     {
+        if (life <= 0)
+        {
+            return;
+        }
+
         life--;
         UpdateLifeUI();
 
         if (life <= 0)
         {
-            Debug.Log("게임 오버!");
-            // 나중에 게임 오버 팝업 연동
+            DoGameOver();
+        }
+    }
+    void DoGameOver()
+    {
+        Debug.Log("게임오버");
+        Time.timeScale = 0f;
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
         }
     }
 }

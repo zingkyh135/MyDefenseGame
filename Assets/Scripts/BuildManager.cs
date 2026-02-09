@@ -53,7 +53,7 @@ public class BuildManager : MonoBehaviour
 
                 GameObject newTower = Instantiate(towerBuild, spawnPos, spawnRotation);
                 GameManager.instance.SpendGold(buildCost); //골드 소모
-                Debug.Log("타워 건설");
+                return newTower;
             }
             return null;
         }
