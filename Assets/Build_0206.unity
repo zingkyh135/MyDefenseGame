@@ -6246,7 +6246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df68a09e1d5ccf74eaa2b25f1a3c18dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 100
+  gold: 200
   goldText: {fileID: 601721784}
 --- !u!1001 &2060851089
 PrefabInstance:
