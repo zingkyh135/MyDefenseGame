@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LifeManager : MonoBehaviour
 {
@@ -66,5 +67,10 @@ public class LifeManager : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
         }
+    }
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
