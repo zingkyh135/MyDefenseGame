@@ -8,7 +8,7 @@ public class Node : MonoBehaviour
     private Color startColor;
     private SpriteRenderer rend;
 
-    private GameObject tower; // 현재 이 자리에 세워진 타워
+    public GameObject tower; // 현재 이 자리에 세워진 타워
 
     void Start()
     {
@@ -29,8 +29,12 @@ public class Node : MonoBehaviour
             return;
         }
 
-        tower = BuildManager.instance.BuildTowerOnNode(transform.position);
+        tower = BuildManager.instance.BuildTowerOnNode(transform.position, this);
 
+    }
+    public void ClearNode()
+    {
+        tower = null;
     }
 
     //마우스를 올리면 색이 변함

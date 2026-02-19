@@ -26,7 +26,7 @@ public class BuildManager : MonoBehaviour
         }
         instance = this;
     }
-    public GameObject BuildTowerOnNode(Vector3 position)
+    public GameObject BuildTowerOnNode(Vector3 position, Node node)
     {
         if (GameManager.instance.gold >= buildCost)
         {
@@ -52,6 +52,11 @@ public class BuildManager : MonoBehaviour
                 Quaternion spawnRotation = Quaternion.Euler(90f, 0f, 0f);
 
                 GameObject newTower = Instantiate(towerBuild, spawnPos, spawnRotation);
+                Tower towerScript = newTower.GetComponent<Tower>();
+                if (towerScript != null)
+                {
+                    towerScript.myNode = node;
+                }
                 GameManager.instance.SpendGold(buildCost); //골드 소모
                 return newTower;
             }
@@ -126,7 +131,23 @@ public class BuildManager : MonoBehaviour
 
         if (nextTowerPrefab != null)
         {
-            Instantiate(nextTowerPrefab, towerA.transform.position, towerA.transform.rotation);
+            if (towerA.myNode != null) 
+            { 
+                towerA.myNode.ClearNode();
+            }
+            if (towerB.myNode != null) 
+            { 
+                towerB.myNode.ClearNode();
+            }
+            GameObject newTowerGO = Instantiate(nextTowerPrefab, towerA.transform.position, towerA.transform.rotation);
+            Tower nextTowerScript = newTowerGO.GetComponent<Tower>();
+
+            if (nextTowerScript != null && towerA.myNode != null)
+            {
+                nextTowerScript.myNode = towerA.myNode;
+                towerA.myNode.tower = newTowerGO;
+            }
+
             Destroy(towerA.gameObject);
             Destroy(towerB.gameObject);
             Debug.LogFormat("{0}티어 합성", nextTier);

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8225705820247562565
+--- !u!1001 &3283208107504502218
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 339892320548535111, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_Name
-      value: Goblin
+      value: Monster_Base
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalRotation.y
@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -51,14 +51,6 @@ PrefabInstance:
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8151877773338317765, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 80b79777b1b3896468a39c2c26962b82, type: 2}
-    - target: {fileID: 8420724283546719080, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
-      propertyPath: speed
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

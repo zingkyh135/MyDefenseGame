@@ -5981,10 +5981,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6c48a9df34d154ebf585833d5f8c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterAPrefab: {fileID: 339892320548535111, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
-  monsterBPrefab: {fileID: 5307790188443756746, guid: ed6943a692cc56041931a986345b997a, type: 3}
-  monsterCPrefab: {fileID: 8543356665533407746, guid: 9c429f0e48052c7418508d075b3033df, type: 3}
-  bossPrefab: {fileID: 0}
+  normalMonsterPrefabs:
+  - {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
+  - {fileID: 5307790188443756746, guid: ed6943a692cc56041931a986345b997a, type: 3}
+  - {fileID: 3411156837202193647, guid: 5ce32db3d843fca49913ba6c9b51d421, type: 3}
+  - {fileID: 6548322494214810496, guid: 2f3dcbef826c02f49bf7c7882a87cfc3, type: 3}
+  - {fileID: 2965556734066736781, guid: dceb8a1af9e4be047b700d8e4ce09902, type: 3}
+  - {fileID: 279558925059100040, guid: e8966c9513d2b4c49a871776db4adea9, type: 3}
+  - {fileID: 5691563627912212549, guid: 3d633fd86c962944a9c44ae55f6ec843, type: 3}
+  - {fileID: 9149681775965046761, guid: 11ecce599ace87c49af5bd20ffba7fd7, type: 3}
+  - {fileID: 1022093072077797709, guid: 3a3bca5b43e30124aa4bce7fb7f82bac, type: 3}
+  bossPrefabs:
+  - {fileID: 6797413192245873322, guid: adf23571439d6a44e8c215131dcb4bf1, type: 3}
   firstWaveDelay: 3
   timeBetweenWaves: 3
   timeBetweenEnemies: 0.5

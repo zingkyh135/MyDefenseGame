@@ -7,6 +7,7 @@ public class Tower : MonoBehaviour
     [Header("타워 합성 설정")]
     public string towerName; //타워 이름
     public int tier = 1; //타워 등급
+    public Node myNode;
 
     [Header("타워 설정")]
     public float range = 3f; //사거리
@@ -22,6 +23,10 @@ public class Tower : MonoBehaviour
 
     void LookAtTarget(Transform target)
     {
+        if (visualRoot == null) 
+        {
+            return;
+        }
         visualRoot.LookAt(target);
         Vector3 rot = visualRoot.localEulerAngles;
         visualRoot.localEulerAngles = new Vector3(0, rot.y, 0);
@@ -38,13 +43,7 @@ public class Tower : MonoBehaviour
             bulletScript.towerDamage = damage;
         }
     }
-    void OnMouseDown()
-    {
-        if (UIManager.instance != null)
-        {
-            UIManager.instance.ShowTower(this);
-        }
-    }
+   
     void Update()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, range, monsterLayer);

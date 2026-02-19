@@ -17,7 +17,7 @@ public class MonsterMove : MonoBehaviour
     public int goldReward = 10;
 
     public Transform[] waypoints; //몬스터 이동경로 설정
-    int index = 0; //경로 번호
+    public int index = 0; //경로 번호
 
     public void TakeDamage(int damage)
     {
@@ -39,7 +39,11 @@ public class MonsterMove : MonoBehaviour
             for(int i = 0; i < splitCount; i++)
             {
                 GameObject miniMonster = Instantiate(splitPrefab, transform.position, Quaternion.identity);
-                //작은 몬스터는 현제 위치에 스폰
+                if (SpawnManager.instance != null)
+                {
+                    SpawnManager.instance.enemiesAlive++;
+                }
+                    //작은 몬스터는 현제 위치에 스폰
                 MonsterMove miniScript = miniMonster.GetComponent<MonsterMove>(); //분열체는 MonsterMove를 받음
                 if (miniScript != null)
                 {
@@ -48,6 +52,13 @@ public class MonsterMove : MonoBehaviour
             }
         }
         Destroy(gameObject); 
+    }
+    private void OnDestroy()
+    {
+        if (SpawnManager.instance != null)
+        {
+            SpawnManager.instance.enemiesAlive--;
+        }
     }
 
     private void Start()
@@ -70,15 +81,33 @@ public class MonsterMove : MonoBehaviour
         {
             Debug.LogWarning("Waypoints없음");
         }
+        //transform.rotation = Quaternion.Euler(0, 0, 180);
     }
     private void Update()
     {
-        if (index < waypoints.Length) //만약 번호가 경로 수보다 작으면
+        if (waypoints == null || waypoints.Length == 0) 
         {
+            return; 
+        }
+        if (index < waypoints.Length) //만약 번호가 경로 수보다 작으면
+         {
             //다음 경로로 스피드만큼 이동
-            transform.position = Vector3.MoveTowards(transform.position,waypoints[index].position, speed*Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, waypoints[index].position, speed * Time.deltaTime);
+            //Vector3 direction = waypoints[index].position - transform.position;
+
+            Vector3 targetPos = waypoints[index].position;
+            Vector3 direction = targetPos - transform.position;
+            direction.y = 0;
+
+            if (direction.magnitude > 0.1f)
+            {
+                //transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
+                transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+                
+            }
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             //만약 경로에 도착하면
-            if(transform.position == waypoints[index].position )
+            if (transform.position == waypoints[index].position)
             {
                 index++; //다음 경로로 이동
             }

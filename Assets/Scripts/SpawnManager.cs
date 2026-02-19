@@ -9,10 +9,8 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager instance;
 
     [Header("소환할 몬스터")]
-    public GameObject monsterAPrefab;
-    public GameObject monsterBPrefab;
-    public GameObject monsterCPrefab;
-    public GameObject bossPrefab;
+    public GameObject[] normalMonsterPrefabs;
+    public GameObject[] bossPrefabs;
 
     [Header("시간 설정")]
     public float firstWaveDelay = 3f; //시작 대기 시간
@@ -63,19 +61,22 @@ public class SpawnManager : MonoBehaviour
 
         if (waveIndex % 10 == 0) //10단위 보스 웨이브
         {
-            currentWavePrefab = bossPrefab;
+            if (bossPrefabs != null && bossPrefabs.Length > 0)
+            {
+                int bossIndex = (waveIndex / 10 - 1) % bossPrefabs.Length;
+                currentWavePrefab = bossPrefabs[bossIndex];
+            }
             monstersToSpawn = 1; //보스는 1마리
-            Debug.Log("보스 웨이브 시작!");
+            Debug.Log("보스 웨이브 시작");
         }
         else
         {
-            // 웨이브마다 몬스터 순서 A > B > C
-            int typeIndex = waveIndex % 3;
-            if (typeIndex == 1) currentWavePrefab = monsterAPrefab;
-            else if (typeIndex == 2) currentWavePrefab = monsterBPrefab;
-            else currentWavePrefab = monsterCPrefab;
+            if (normalMonsterPrefabs != null && normalMonsterPrefabs.Length > 0)
+            {
+                int prefabIndex = (waveIndex - 1 - (waveIndex / 10)) % normalMonsterPrefabs.Length;
 
-            // 웨이브당 소환 마리수 (기본 5마리 + 웨이브 절반만큼 추가)
+                currentWavePrefab = normalMonsterPrefabs[prefabIndex];
+            }
             monstersToSpawn = monstersPerWave;
         }
 
@@ -132,15 +133,17 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        // [사용자 요청] 지정된 spawnPoint 위치에서 몬스터 생성
-        GameObject enemy = Instantiate(currentWavePrefab, spawnPoint.position, Quaternion.identity);
+        //Quaternion fixedRotation = Quaternion.Euler(0, 0, 180);
+        GameObject enemy = Instantiate(currentWavePrefab, spawnPoint.position, currentWavePrefab.transform.rotation);
+        enemiesAlive++;
 
         // 몬스터 체력 고도화 (웨이브에 비례)
         MonsterMove monsterScript = enemy.GetComponent<MonsterMove>();
         if (monsterScript != null)
         {
             // 예: 기본 체력에 웨이브당 10씩 추가
-            monsterScript.hp += (waveIndex - 1) * 10;
+            float growthMultiplier = 1f + (waveIndex - 1) * 0.2f; //웨이브당 20%씩 강화
+            monsterScript.hp = Mathf.RoundToInt(monsterScript.hp * growthMultiplier);
 
             // 보스일 경우 체력을 10배로 설정
             if (waveIndex % 10 == 0)
