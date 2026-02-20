@@ -15,6 +15,8 @@ public class Tower : MonoBehaviour
     public Transform visualRoot;
     public Transform firePoint;
 
+    private Transform target;
+
     [Header("발사 설정")]
     public GameObject bulletPrefab;
     public float fireRate = 1f; //발사 속도
@@ -48,15 +50,33 @@ public class Tower : MonoBehaviour
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, range, monsterLayer);
 
-        if (targets.Length > 0)
+        MonsterMove bestTarget = null;
+        float maxDistance = -1f;
+
+        for (int i = 0; i < targets.Length; i++)
         {
-            Transform target = targets[0].transform;
-            LookAtTarget(target);
-            Debug.Log("추적");
-            
+            MonsterMove monster = targets[i].GetComponent<MonsterMove>();
+            if (monster != null)
+            {
+                float dist = monster.GetDistanceTraveled();
+                if (dist > maxDistance)
+                {
+                    maxDistance = dist;
+                    bestTarget = monster;
+                }
+            }
+        }
+
+        if (bestTarget != null)
+        {
+            Transform targetTransform = bestTarget.transform;
+
+            LookAtTarget(targetTransform);
+            Debug.Log("가장 앞 적" + targetTransform.name);
+
             if (fireCountdown <= 0f)
             {
-                Shoot(target);
+                Shoot(targetTransform); // Shoot 함수에도 선별된 타겟 전달
                 fireCountdown = 1f / fireRate;
             }
         }

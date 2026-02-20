@@ -133,8 +133,13 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        //Quaternion fixedRotation = Quaternion.Euler(0, 0, 180);
-        GameObject enemy = Instantiate(currentWavePrefab, spawnPoint.position, currentWavePrefab.transform.rotation);
+        GameObject waypointGroup = GameObject.Find("Waypoints");
+        Vector3 firstDest = waypointGroup.transform.GetChild(0).position;
+        Vector3 direction = (firstDest - spawnPoint.position).normalized;
+        direction.z = 0;
+        Quaternion spawnRotation = Quaternion.LookRotation(direction, Vector3.back);
+
+        GameObject enemy = Instantiate(currentWavePrefab, spawnPoint.position, spawnRotation);
         enemiesAlive++;
 
         // 몬스터 체력 고도화 (웨이브에 비례)
@@ -152,6 +157,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
+
     void UpdateWaveUI()
     {
         if (waveText != null)

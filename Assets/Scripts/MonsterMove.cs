@@ -19,6 +19,12 @@ public class MonsterMove : MonoBehaviour
     public Transform[] waypoints; //몬스터 이동경로 설정
     public int index = 0; //경로 번호
 
+    private float distanceTraveled = 0f;
+
+    public float GetDistanceTraveled()
+    {
+        return distanceTraveled;
+    }
     public void TakeDamage(int damage)
     {
         hp -= damage;
@@ -91,21 +97,19 @@ public class MonsterMove : MonoBehaviour
         }
         if (index < waypoints.Length) //만약 번호가 경로 수보다 작으면
          {
-            //다음 경로로 스피드만큼 이동
-            //transform.position = Vector3.MoveTowards(transform.position, waypoints[index].position, speed * Time.deltaTime);
-            //Vector3 direction = waypoints[index].position - transform.position;
-
             Vector3 targetPos = waypoints[index].position;
             Vector3 direction = targetPos - transform.position;
-            direction.y = 0;
+            direction.z = 0;
 
             if (direction.magnitude > 0.1f)
             {
-                //transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
-                transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-                
+                transform.rotation = Quaternion.LookRotation(direction, Vector3.back);
             }
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+
+            float moveStep = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveStep);
+            distanceTraveled += moveStep;
+
             //만약 경로에 도착하면
             if (transform.position == waypoints[index].position)
             {

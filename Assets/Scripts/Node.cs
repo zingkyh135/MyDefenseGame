@@ -10,6 +10,11 @@ public class Node : MonoBehaviour
 
     public GameObject tower; // 현재 이 자리에 세워진 타워
 
+    public bool isFull
+    {
+        get { return tower != null; }
+        set { /* 필요에 따라 구현 */ }
+    }
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -23,14 +28,17 @@ public class Node : MonoBehaviour
     void OnMouseDown()
     {
         //타워가 이미 있다면
-        if (tower != null)
+        if (isFull)
         {
-            Debug.Log("이미 타워가 있습니다!");
+            Tower towerScript = tower.GetComponent<Tower>();
+
+            if (towerScript != null)
+            {
+                UIManager.instance.ShowTower(towerScript);
+            }
             return;
         }
-
         tower = BuildManager.instance.BuildTowerOnNode(transform.position, this);
-
     }
     public void ClearNode()
     {

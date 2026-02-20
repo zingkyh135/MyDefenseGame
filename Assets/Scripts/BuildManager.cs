@@ -15,8 +15,9 @@ public class BuildManager : MonoBehaviour
     public GameObject[] tier4Towers;
     public GameObject[] tier5Towers;
 
-    [Header("건설 비용")]
+    [Header("건성/판매 비용")]
     public int buildCost = 50; //타워 건설 비용
+    public int sellPrice = 30; //타워 판매 비용
 
     void Awake()
     {
@@ -67,6 +68,29 @@ public class BuildManager : MonoBehaviour
             Debug.Log("골드 부족");
             return null;
         }
+    }
+    public void SellTower(Tower tower)
+    {
+        if (tower == null)
+        {
+            return;
+        }
+
+        int refundAmount = sellPrice;
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.AddGold(refundAmount);
+        }
+
+        if (tower.myNode != null)
+        {
+            tower.myNode.isFull = false;
+            tower.myNode.tower = null;
+        }
+
+        string soldName = tower.towerName;
+        Destroy(tower.gameObject);
     }
     private GameObject GetRandomList(GameObject[] list)
     {
