@@ -9,6 +9,9 @@ public class Tower : MonoBehaviour
     public int tier = 1; //타워 등급
     public Node myNode;
 
+    [Header("데이터 설정")]
+    public TowerData data;
+
     [Header("타워 설정")]
     public float range = 3f; //사거리
     public LayerMask monsterLayer; //감지할 레이어
@@ -19,9 +22,24 @@ public class Tower : MonoBehaviour
 
     [Header("발사 설정")]
     public GameObject bulletPrefab;
-    public float fireRate = 1f; //발사 속도
-    public int damage = 10; //타워 공격력
     private float fireCountdown = 0f; //발사 쿨타임
+
+    public float damageMultiplier = 1.0f;
+    public float fireRateMultiplier = 1.0f;
+    public float rangeMultiplier = 1.0f;
+
+    public void UpgradeDamage() 
+    {
+        damageMultiplier += 0.2f; 
+    }
+    public void UpgradeFireRate()
+    {
+        fireRateMultiplier += 0.2f; 
+    }
+    public void UpgradeRange() 
+    {
+        rangeMultiplier += 0.2f;
+    }
 
     void LookAtTarget(Transform target)
     {
@@ -36,19 +54,26 @@ public class Tower : MonoBehaviour
 
     void Shoot(Transform target)
     {
+        if (bulletPrefab == null || firePoint == null) 
+        {
+            return; 
+        }
         GameObject bulletGO = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         Bullet bulletScript = bulletGO.GetComponent<Bullet>();
         if (bulletScript != null)
         {
             bulletScript.See(target);
-            bulletScript.towerDamage = damage;
+            bulletScript.towerDamage = Mathf.RoundToInt(data.damage * damageMultiplier);
+            bulletScript.attackType = data.attackType;
+            bulletScript.effectValue = data.effectValue;
         }
     }
    
     void Update()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, range, monsterLayer);
+        float currentRange = data.range * rangeMultiplier;
+        Collider[] targets = Physics.OverlapSphere(transform.position, currentRange, monsterLayer);
 
         MonsterMove bestTarget = null;
         float maxDistance = -1f;
@@ -72,12 +97,12 @@ public class Tower : MonoBehaviour
             Transform targetTransform = bestTarget.transform;
 
             LookAtTarget(targetTransform);
-            Debug.Log("가장 앞 적" + targetTransform.name);
 
+            float fireInterval = 1f / (data.fireRate * fireRateMultiplier);
             if (fireCountdown <= 0f)
             {
-                Shoot(targetTransform); // Shoot 함수에도 선별된 타겟 전달
-                fireCountdown = 1f / fireRate;
+                Shoot(targetTransform);
+                fireCountdown = fireInterval;
             }
         }
         if (fireCountdown > 0)
@@ -88,7 +113,10 @@ public class Tower : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        if (data != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, data.range * rangeMultiplier);
+        }
     }
 }

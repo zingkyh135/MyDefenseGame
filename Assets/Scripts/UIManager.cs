@@ -10,6 +10,12 @@ public class UIManager : MonoBehaviour
     public GameObject infoPanel;
     private Tower currentTower;
 
+    [Header("°­È­ UI")]
+    public GameObject upgradePanel;
+    public GameObject damageUpgradeBtn;
+    public GameObject speedUpgradeBtn;
+    public GameObject rangeUpgradeBtn;
+
     private void Awake()
     {
         if (instance != null) 
@@ -24,6 +30,32 @@ public class UIManager : MonoBehaviour
         if (infoPanel != null)
         {
             infoPanel.SetActive(true);
+            damageUpgradeBtn.SetActive(tower.data.enhancementCategory == EnhancementCategory.DamageUpgrade);
+            speedUpgradeBtn.SetActive(tower.data.enhancementCategory == EnhancementCategory.SpeedUpgrade);
+            rangeUpgradeBtn.SetActive(tower.data.enhancementCategory == EnhancementCategory.RangeUpgrade);
+        }
+    }
+    public void OnClickUpgradeDamage()
+    {
+        TryUpgrade(() => currentTower.UpgradeDamage());
+    }
+
+    public void OnClickUpgradeSpeed()
+    {
+        TryUpgrade(() => currentTower.UpgradeFireRate());
+    }
+
+    public void OnClickUpgradeRange()
+    {
+        TryUpgrade(() => currentTower.UpgradeRange());
+    }
+    private void TryUpgrade(System.Action upgradeAction)
+    {
+        int upgradeCost = 50;
+
+        if (currentTower != null && GameManager.instance.SpendDiamond(upgradeCost))
+        {
+            upgradeAction.Invoke();
         }
     }
     public void OnClickMergeButton()

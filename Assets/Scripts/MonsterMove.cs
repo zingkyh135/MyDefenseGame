@@ -18,12 +18,72 @@ public class MonsterMove : MonoBehaviour
 
     public Transform[] waypoints; //몬스터 이동경로 설정
     public int index = 0; //경로 번호
+    private float defaultSpeed; //원래속도
+    private bool isStunned = false; //스턴 상태
+    private Coroutine dotCoroutine;
 
     private float distanceTraveled = 0f;
+
+    private void Awake()
+    {
+        defaultSpeed = speed; //초기 속도 저장
+    }
 
     public float GetDistanceTraveled()
     {
         return distanceTraveled;
+    }
+
+    public void ApplySlow(float slowAmount)
+    {
+        speed = defaultSpeed * (1f - slowAmount);
+        StartCoroutine(ResetSpeed(2f));//일정 시간 후 원래 속도로 복구
+    }
+    private IEnumerator ResetSpeed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        speed = defaultSpeed;
+    }
+    public void ApplyStun()
+    {
+        if (isStunned) //스턴 중복 방지
+        {
+            return;
+        }
+        isStunned = true;
+        StartCoroutine(ResetStun(1.5f)); //1.5초 스턴
+    }
+    private IEnumerator ResetStun(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isStunned = false;
+    }
+    public void ApplyDotDamage(float dotValue)
+    {
+        if (dotCoroutine != null)
+        {
+            StopCoroutine(dotCoroutine);
+        }
+        dotCoroutine = StartCoroutine(DotDamageCoroutine(dotValue, 3f));
+    }
+    private IEnumerator DotDamageCoroutine(float damagePerSecond, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            TakeDamage((int)damagePerSecond);
+            yield return new WaitForSeconds(1f); //1초마다 데미지
+            elapsed += 1f;
+        }
+        dotCoroutine = null;
+    }
+    public void ApplyPercentDamage(float percent)
+    {
+        int damage = Mathf.RoundToInt(hp * percent);
+
+        if (damage < 1) damage = 1;
+
+        TakeDamage(damage);
     }
     public void TakeDamage(int damage)
     {
@@ -91,6 +151,10 @@ public class MonsterMove : MonoBehaviour
     }
     private void Update()
     {
+        if (isStunned) 
+        { 
+            return;
+        }
         if (waypoints == null || waypoints.Length == 0) 
         {
             return; 

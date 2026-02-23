@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 339892320548535111, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_Name
-      value: MBoss
+      value: MB1
       objectReference: {fileID: 0}
     - target: {fileID: 2841624952594447118, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8420724283546719080, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
       propertyPath: hp
-      value: 1000
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

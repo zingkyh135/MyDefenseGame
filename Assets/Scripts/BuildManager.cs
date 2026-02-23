@@ -19,6 +19,11 @@ public class BuildManager : MonoBehaviour
     public int buildCost = 50; //타워 건설 비용
     public int sellPrice = 30; //타워 판매 비용
 
+    [Header("강화 그룹")]
+    public GameObject[] damageTowerList;
+    public GameObject[] speedTowerList;
+    public GameObject[] rangeTowerList;
+
     void Awake()
     {
         if (instance != null)
@@ -29,7 +34,7 @@ public class BuildManager : MonoBehaviour
     }
     public GameObject BuildTowerOnNode(Vector3 position, Node node)
     {
-        if (GameManager.instance.gold >= buildCost)
+        if (GameManager.instance.SpendGold(buildCost))
         {
             GameObject towerBuild = null;
             float randomValue = Random.value;
@@ -58,15 +63,27 @@ public class BuildManager : MonoBehaviour
                 {
                     towerScript.myNode = node;
                 }
-                GameManager.instance.SpendGold(buildCost); //골드 소모
                 return newTower;
             }
-            return null;
         }
-        else
+        return null; 
+    }
+    public void ApplyUpgradeToTower(Tower tower)
+    {
+        int level = GameManager.instance.GetUpgradeLevel(tower.towerName);
+        float bonus = level * 0.1f;
+
+        if (tower.data.enhancementCategory == EnhancementCategory.DamageUpgrade)
         {
-            Debug.Log("골드 부족");
-            return null;
+            tower.damageMultiplier = 1.0f + bonus;
+        }
+        else if (tower.data.enhancementCategory == EnhancementCategory.SpeedUpgrade)
+        {
+            tower.fireRateMultiplier = 1.0f + bonus;
+        }
+        else if (tower.data.enhancementCategory == EnhancementCategory.RangeUpgrade)
+        {
+            tower.rangeMultiplier = 1.0f + bonus;
         }
     }
     public void SellTower(Tower tower)
@@ -174,7 +191,6 @@ public class BuildManager : MonoBehaviour
 
             Destroy(towerA.gameObject);
             Destroy(towerB.gameObject);
-            Debug.LogFormat("{0}티어 합성", nextTier);
         }
     }
 }
