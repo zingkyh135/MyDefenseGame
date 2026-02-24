@@ -15,7 +15,8 @@ MonoBehaviour:
   towerName: DamageGroup
   damage: 25
   fireRate: 1
-  range: 2
+  range: 1
   attackType: 2
-  effectValue: 5
+  effectValue: 0.1
+  explosionRadius: 0
   enhancementCategory: 0

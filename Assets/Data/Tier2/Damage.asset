@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f967e0620f730644a0d03461865813c, type: 3}
   m_Name: Damage
   m_EditorClassIdentifier: 
-  towerName: 
+  towerName: RangeGroup
   damage: 50
   fireRate: 1
   range: 2
   attackType: 0
   effectValue: 0
+  enhancementCategory: 0

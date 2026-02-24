@@ -93,7 +93,7 @@ public class SpawnManager : MonoBehaviour
             //타이머 UI표시
             if (timerText != null)
             {
-                timerText.text = "Next Wave in: " + Mathf.Ceil(waveWaitTimer);
+                timerText.text = " " + Mathf.Ceil(waveWaitTimer);
             }
             if (waveWaitTimer <= 0)
             {
@@ -129,7 +129,6 @@ public class SpawnManager : MonoBehaviour
     {
         if (currentWavePrefab == null || spawnPoint == null)
         {
-            Debug.LogWarning("프리팹 혹은 소환 위치(SpawnPoint)가 설정되지 않았습니다!");
             return;
         }
 
@@ -142,15 +141,13 @@ public class SpawnManager : MonoBehaviour
         GameObject enemy = Instantiate(currentWavePrefab, spawnPoint.position, spawnRotation);
         enemiesAlive++;
 
-        // 몬스터 체력 고도화 (웨이브에 비례)
         MonsterMove monsterScript = enemy.GetComponent<MonsterMove>();
         if (monsterScript != null)
         {
-            // 예: 기본 체력에 웨이브당 10씩 추가
             float growthMultiplier = 1f + (waveIndex - 1) * 0.2f; //웨이브당 20%씩 강화
             monsterScript.hp = Mathf.RoundToInt(monsterScript.hp * growthMultiplier);
 
-            // 보스일 경우 체력을 10배로 설정
+            //보스일 경우 체력을 10배로 설정
             if (waveIndex % 10 == 0)
             {
                 monsterScript.hp *= 10;
@@ -158,11 +155,15 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    void UpdateWaveUI()
+    public void UpdateWaveUI()
     {
         if (waveText != null)
         {
             waveText.text = "WAVE " + waveIndex;
+        }
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.currentWave = waveIndex;
         }
         if (timerText != null)
         {

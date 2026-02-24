@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public int diamond = 0; // 강화 재화
     public TextMeshProUGUI diamondText;
 
+    public int currentWave = 1;
+
     private void Awake()
     {
         instance = this;
@@ -32,9 +34,14 @@ public class GameManager : MonoBehaviour
             return 0;
         }
     }
+    public void SetWave(int wave)
+    {
+        currentWave = wave;
+    }
+
     public void UpgradeCategory(string categoryName)
     {
-        if (SpendDiamond(50)) // 50 다이아 고정 소모
+        if (SpendDiamond(1)) //다이아 소모량
         {
             if (!upgradeLevels.ContainsKey(categoryName)) 
             { 

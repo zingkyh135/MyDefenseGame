@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: FireRate
   m_EditorClassIdentifier: 
   towerName: DamageGroup
-  damage: 25
+  damage: 50
   fireRate: 3
-  range: 2
+  range: 1
   attackType: 0
   effectValue: 0
+  explosionRadius: 0
   enhancementCategory: 0

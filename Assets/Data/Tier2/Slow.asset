@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f967e0620f730644a0d03461865813c, type: 3}
   m_Name: Slow
   m_EditorClassIdentifier: 
-  towerName: 
+  towerName: RangeGroup
   damage: 25
   fireRate: 1
   range: 2
   attackType: 1
   effectValue: 0.1
+  enhancementCategory: 0

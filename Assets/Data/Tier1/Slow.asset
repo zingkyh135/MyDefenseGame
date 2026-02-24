@@ -18,4 +18,5 @@ MonoBehaviour:
   range: 2
   attackType: 1
   effectValue: 0.1
-  enhancementCategory: 0
+  explosionRadius: 2
+  enhancementCategory: 2

@@ -66,7 +66,14 @@ public class Tower : MonoBehaviour
             bulletScript.See(target);
             bulletScript.towerDamage = Mathf.RoundToInt(data.damage * damageMultiplier);
             bulletScript.attackType = data.attackType;
-            bulletScript.effectValue = data.effectValue;
+            if (data.attackType == AttackType.Area)
+            {
+                bulletScript.explosionRadius = data.explosionRadius;
+            }
+            else
+            {
+                bulletScript.effectValue = data.effectValue;
+            }
         }
     }
    
@@ -110,7 +117,24 @@ public class Tower : MonoBehaviour
             fireCountdown -= Time.deltaTime;
         }
     }
+    public void SplashDamage(Vector3 targetPosition)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(targetPosition, data.explosionRadius);
 
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Monster"))
+            {
+                MonsterMove monster = hitCollider.GetComponent<MonsterMove>();
+
+                if (monster != null)
+                {
+                    float finalDamage = data.damage * damageMultiplier;
+                    monster.TakeDamage((int)finalDamage);
+                }
+            }
+        }
+    }
     private void OnDrawGizmosSelected()
     {
         if (data != null)

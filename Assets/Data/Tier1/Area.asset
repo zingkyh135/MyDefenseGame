@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Area
   m_EditorClassIdentifier: 
   towerName: SpeedGroup
-  damage: 25
-  fireRate: 1
+  damage: 75
+  fireRate: 0.5
   range: 2
-  attackType: 3
-  effectValue: 0.5
-  enhancementCategory: 0
+  attackType: 5
+  effectValue: 0
+  explosionRadius: 1.5
+  enhancementCategory: 1

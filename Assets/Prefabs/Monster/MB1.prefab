@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: hp
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 8420724283546719080, guid: 256f192bd8e2edc41a906e58d7554598, type: 3}
+      propertyPath: diamondReward
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

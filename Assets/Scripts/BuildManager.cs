@@ -62,6 +62,7 @@ public class BuildManager : MonoBehaviour
                 if (towerScript != null)
                 {
                     towerScript.myNode = node;
+                    ApplyUpgradeToTower(towerScript);
                 }
                 return newTower;
             }
@@ -84,6 +85,16 @@ public class BuildManager : MonoBehaviour
         else if (tower.data.enhancementCategory == EnhancementCategory.RangeUpgrade)
         {
             tower.rangeMultiplier = 1.0f + bonus;
+        }
+        Debug.Log(tower.towerName + " 강화 적용 완료! 현재 단계: " + level + " (배율: " + (1.0f + bonus) + ")");
+    }
+    public void RefreshAllTowers()
+    {
+        Tower[] allTowers = FindObjectsOfType<Tower>();
+
+        foreach (Tower tower in allTowers)
+        {
+            ApplyUpgradeToTower(tower);
         }
     }
     public void SellTower(Tower tower)
@@ -138,10 +149,6 @@ public class BuildManager : MonoBehaviour
         {
             ExecuteMerge(selectedTower, partnerTower);
         }
-        else
-        {
-            
-        }
     }
     private void ExecuteMerge(Tower towerA, Tower towerB)
     {
@@ -187,6 +194,7 @@ public class BuildManager : MonoBehaviour
             {
                 nextTowerScript.myNode = towerA.myNode;
                 towerA.myNode.tower = newTowerGO;
+                ApplyUpgradeToTower(nextTowerScript);
             }
 
             Destroy(towerA.gameObject);

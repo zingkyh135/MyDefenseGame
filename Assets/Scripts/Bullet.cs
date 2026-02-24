@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     public AttackType attackType;
     public float effectValue;
     private Transform target; //타겟
+    public float explosionRadius;
 
     public void See(Transform monster)
     {
@@ -21,13 +22,34 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Monster"))
         {
-            MonsterMove monsterScript = other.GetComponent<MonsterMove>();
-            if (monsterScript != null)
+            if (attackType == AttackType.Area)
             {
-                ApplyEffect(monsterScript);
+                Explode();
             }
-            Debug.Log(other.name + " 명중");
+            else
+            {
+                MonsterMove monsterScript = other.GetComponent<MonsterMove>();
+                if (monsterScript != null)
+                {
+                    ApplyEffect(monsterScript);
+                }
+            }
             Destroy(gameObject);
+        }
+    }
+    private void Explode()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Monster"))
+            {
+                MonsterMove monster = hitCollider.GetComponent<MonsterMove>();
+                if (monster != null)
+                {
+                    ApplyEffect(monster);
+                }
+            }
         }
     }
     private void ApplyEffect(MonsterMove monster)
@@ -46,6 +68,7 @@ public class Bullet : MonoBehaviour
                 break;
             case AttackType.Dot:
                 //도트 데미지 코루틴 실행
+                float calculatedDotDamage = towerDamage * effectValue;
                 monster.ApplyDotDamage(effectValue);
                 break;
             case AttackType.PercentDamage:
