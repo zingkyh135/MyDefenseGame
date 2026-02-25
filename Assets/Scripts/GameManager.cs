@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static TMPro.Examples.ObjectSpin;
+
+[System.Serializable]
+public class UpgradeData
+{
+    public int damageLevel = 0;
+    public int rangeLevel = 0;
+    public int speedLevel = 0;
+}
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private Dictionary<string, int> upgradeLevels = new Dictionary<string, int>();
+    private Dictionary<string, UpgradeData> upgradeLevels = new Dictionary<string, UpgradeData>();
 
     [Header("골드 설정")]
     public int gold = 100; //시작 골드
@@ -25,29 +34,79 @@ public class GameManager : MonoBehaviour
     }
     public int GetUpgradeLevel(string categoryName)
     {
-        if (upgradeLevels.ContainsKey(categoryName))
-        {
-            return upgradeLevels[categoryName];
+        return 0;
+    }
+    public int GetOptionLevel(string category, string optionType)
+    {
+        if (!upgradeLevels.ContainsKey(category)) 
+        { 
+            return 0; 
         }
-        else
-        {
-            return 0;
+
+        UpgradeData data = upgradeLevels[category];
+        if (optionType == "Damage") 
+        { 
+            return data.damageLevel; 
         }
+        if (optionType == "Range")
+        { 
+            return data.rangeLevel;
+        }
+        if (optionType == "Speed") 
+        { 
+            return data.speedLevel; 
+        }
+        return 0;
     }
     public void SetWave(int wave)
     {
         currentWave = wave;
     }
 
-    public void UpgradeCategory(string categoryName)
+    public void UpgradeCategory(string categoryName, bool isDiamond, string optionType)
     {
-        if (SpendDiamond(1)) //다이아 소모량
+        int cost;
+
+        if (isDiamond == true)
         {
-            if (!upgradeLevels.ContainsKey(categoryName)) 
-            { 
-                upgradeLevels[categoryName] = 0;
+            cost = 1;
+        }
+        else
+        {
+            cost = 50;
+        }
+        bool canUpgrade = false;
+        if (isDiamond == true)
+        {
+            canUpgrade = SpendDiamond(cost);
+        }
+        else
+        {
+            canUpgrade = SpendGold(cost);
+        }
+        if (canUpgrade == true)
+        {
+            if (upgradeLevels.ContainsKey(categoryName) == false)
+            {
+                upgradeLevels[categoryName] = new UpgradeData();
             }
-            upgradeLevels[categoryName]++;
+            if (optionType == "Damage")
+            {
+                upgradeLevels[categoryName].damageLevel = upgradeLevels[categoryName].damageLevel + 1;
+            }
+            else if (optionType == "Range")
+            {
+                upgradeLevels[categoryName].rangeLevel = upgradeLevels[categoryName].rangeLevel + 1;
+            }
+            else if (optionType == "Speed")
+            {
+                upgradeLevels[categoryName].speedLevel = upgradeLevels[categoryName].speedLevel + 1;
+            }
+
+            if (BuildManager.instance != null)
+            {
+                BuildManager.instance.RefreshAllTowers();
+            }
         }
     }
     void UpdateGoldUI()

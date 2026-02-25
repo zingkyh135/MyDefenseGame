@@ -39,16 +39,15 @@ public class Bullet : MonoBehaviour
     }
     private void Explode()
     {
+        int monsterLayerMask = LayerMask.GetMask("Monster");
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        foreach (var hitCollider in hitColliders)
+
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (hitCollider.CompareTag("Monster"))
+            MonsterMove monster = hitColliders[i].GetComponent<MonsterMove>();
+            if (monster != null)
             {
-                MonsterMove monster = hitCollider.GetComponent<MonsterMove>();
-                if (monster != null)
-                {
-                    ApplyEffect(monster);
-                }
+                ApplyEffect(monster);
             }
         }
     }

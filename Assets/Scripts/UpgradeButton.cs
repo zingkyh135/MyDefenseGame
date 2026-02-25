@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class UpgradeButton : MonoBehaviour
 {
+    [Header("강화 설정")]
     public string categoryName;
+    public bool isDiamond;
+
     public TextMeshProUGUI levelText; 
 
     private void Start()
@@ -14,14 +17,12 @@ public class UpgradeButton : MonoBehaviour
     }
     public void OnClickUpgrade()
     {
-        if (GameManager.instance == null)
+        if (UIManager.instance != null)
         {
-            return;
+            UIManager.instance.ShowUpgradeChoicePanel(categoryName, isDiamond);
+
+            UpdateLevelText();
         }
-
-        GameManager.instance.UpgradeCategory(categoryName);
-        UpdateLevelText();
-
     }
 
     public void UpdateLevelText()

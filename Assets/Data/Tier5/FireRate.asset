@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f967e0620f730644a0d03461865813c, type: 3}
   m_Name: FireRate
   m_EditorClassIdentifier: 
-  towerName: DamageGroup
-  damage: 25
-  fireRate: 3
-  range: 2
+  towerName: 
+  damage: 250
+  fireRate: 4
+  range: 1
   attackType: 0
   effectValue: 0
-  explosionRadius: 2
-  enhancementCategory: 0
+  explosionRadius: 0
+  attribute: FireRate

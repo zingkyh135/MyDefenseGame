@@ -10,18 +10,13 @@ public class UIManager : MonoBehaviour
     public GameObject infoPanel;
     private Tower currentTower;
 
-    [Header("강화 UI")]
-    public GameObject upgradePanel;
-    public GameObject damageUpgradeBtn;
-    public GameObject speedUpgradeBtn;
-    public GameObject rangeUpgradeBtn;
+    [Header("강화 선택창")]
+    public GameObject upgradeChoicePanel;
+    private string selectedCategory;
+    private bool isSelectedDiamond;
 
     private void Awake()
     {
-        if (instance != null) 
-        { 
-            return;
-        }
         instance = this;
     }
     public void ShowTower(Tower tower)
@@ -30,34 +25,61 @@ public class UIManager : MonoBehaviour
         if (infoPanel != null)
         {
             infoPanel.SetActive(true);
-            damageUpgradeBtn.SetActive(true);
-            speedUpgradeBtn.SetActive(true);
-            rangeUpgradeBtn.SetActive(true);
         }
     }
-    public void OnClickUpgradeDamage()
+    public void ShowUpgradeChoicePanel(string categoryName, bool isDiamond)
     {
-        UpgradeGroup("DamageGroup");
-    }
+        int cost;
 
-    public void OnClickUpgradeSpeed()
-    {
-        UpgradeGroup("SpeedGroup");
-    }
-
-    public void OnClickUpgradeRange()
-    {
-        UpgradeGroup("RangeGroup");
-    }
-    private void UpgradeGroup(string groupName)
-    {
-        int upgradeCost = 50;
-
-        if (GameManager.instance.SpendDiamond(upgradeCost))
+        if (isDiamond == true)
         {
-            GameManager.instance.UpgradeCategory(groupName);
+            cost = 1;
+        }
+        else
+        {
+            cost = 50;
+        }
 
-            BuildManager.instance.RefreshAllTowers();
+        bool canAfford;
+
+        if (isDiamond == true)
+        {
+            canAfford = (GameManager.instance.diamond >= cost);
+        }
+        else
+        {
+            canAfford = (GameManager.instance.gold >= cost);
+        }
+
+        if (canAfford)
+        {
+            selectedCategory = categoryName;
+            isSelectedDiamond = isDiamond;
+            if (upgradeChoicePanel != null)
+            {
+                upgradeChoicePanel.SetActive(true);
+            }
+        }
+    }
+    public void OnClickChoiceOption(string optionType)
+    {
+        GameManager.instance.UpgradeCategory(selectedCategory, isSelectedDiamond, optionType);
+        upgradeChoicePanel.SetActive(false);
+    }
+    public void OnClickConfirmUpgrade()
+    {
+        GameManager.instance.UpgradeCategory(selectedCategory, isSelectedDiamond, "Damage");
+
+        if (upgradeChoicePanel != null) 
+        { 
+            upgradeChoicePanel.SetActive(false); 
+        }
+    }
+    public void OnClickCloseChoicePanel()
+    {
+        if (upgradeChoicePanel != null) 
+        {
+            upgradeChoicePanel.SetActive(false);
         }
     }
     public void OnClickMergeButton()
@@ -91,10 +113,7 @@ public class UIManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //Application.Quit();
-        }
+
     }
 
 }

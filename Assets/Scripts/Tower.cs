@@ -24,22 +24,10 @@ public class Tower : MonoBehaviour
     public GameObject bulletPrefab;
     private float fireCountdown = 0f; //발사 쿨타임
 
+    [Header("강화 수치 (수정 가능)")]
     public float damageMultiplier = 1.0f;
     public float fireRateMultiplier = 1.0f;
     public float rangeMultiplier = 1.0f;
-
-    public void UpgradeDamage() 
-    {
-        damageMultiplier += 0.2f; 
-    }
-    public void UpgradeFireRate()
-    {
-        fireRateMultiplier += 0.2f; 
-    }
-    public void UpgradeRange() 
-    {
-        rangeMultiplier += 0.2f;
-    }
 
     void LookAtTarget(Transform target)
     {
@@ -79,6 +67,7 @@ public class Tower : MonoBehaviour
    
     void Update()
     {
+
         float currentRange = data.range * rangeMultiplier;
         Collider[] targets = Physics.OverlapSphere(transform.position, currentRange, monsterLayer);
 
@@ -116,22 +105,20 @@ public class Tower : MonoBehaviour
         {
             fireCountdown -= Time.deltaTime;
         }
+
     }
     public void SplashDamage(Vector3 targetPosition)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(targetPosition, data.explosionRadius);
+        int monsterLayerMask = LayerMask.GetMask("Monster");
+        Collider[] hitColliders = Physics.OverlapSphere(targetPosition, data.explosionRadius, monsterLayerMask);
 
-        foreach (var hitCollider in hitColliders)
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (hitCollider.CompareTag("Monster"))
+            MonsterMove monster = hitColliders[i].GetComponent<MonsterMove>();
+            if (monster != null)
             {
-                MonsterMove monster = hitCollider.GetComponent<MonsterMove>();
-
-                if (monster != null)
-                {
-                    float finalDamage = data.damage * damageMultiplier;
-                    monster.TakeDamage((int)finalDamage);
-                }
+                float finalDamage = data.damage * damageMultiplier;
+                monster.TakeDamage((int)finalDamage);
             }
         }
     }

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f967e0620f730644a0d03461865813c, type: 3}
   m_Name: Area
   m_EditorClassIdentifier: 
-  towerName: SpeedGroup
+  towerName: 
   damage: 75
   fireRate: 0.5
-  range: 2
+  range: 1.5
   attackType: 5
   effectValue: 0
-  explosionRadius: 1.5
-  enhancementCategory: 1
+  explosionRadius: 0.5
+  attribute: Area

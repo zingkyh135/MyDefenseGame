@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -71,30 +72,21 @@ public class BuildManager : MonoBehaviour
     }
     public void ApplyUpgradeToTower(Tower tower)
     {
-        int level = GameManager.instance.GetUpgradeLevel(tower.towerName);
-        float bonus = level * 0.1f;
+        int dmgLv = GameManager.instance.GetOptionLevel("Diamond", "Damage") + GameManager.instance.GetOptionLevel(tower.towerName, "Damage");
+        int rngLv = GameManager.instance.GetOptionLevel("Diamond", "Range") + GameManager.instance.GetOptionLevel(tower.towerName, "Range");
+        int spdLv = GameManager.instance.GetOptionLevel("Diamond", "Speed") + GameManager.instance.GetOptionLevel(tower.towerName, "Speed");
 
-        if (tower.data.enhancementCategory == EnhancementCategory.DamageUpgrade)
-        {
-            tower.damageMultiplier = 1.0f + bonus;
-        }
-        else if (tower.data.enhancementCategory == EnhancementCategory.SpeedUpgrade)
-        {
-            tower.fireRateMultiplier = 1.0f + bonus;
-        }
-        else if (tower.data.enhancementCategory == EnhancementCategory.RangeUpgrade)
-        {
-            tower.rangeMultiplier = 1.0f + bonus;
-        }
-        Debug.Log(tower.towerName + " 강화 적용 완료! 현재 단계: " + level + " (배율: " + (1.0f + bonus) + ")");
+        tower.damageMultiplier = 1.0f + (dmgLv * 0.1f);
+        tower.rangeMultiplier = 1.0f + (rngLv * 0.1f);
+        tower.fireRateMultiplier = 1.0f + (spdLv * 0.1f);
     }
     public void RefreshAllTowers()
     {
         Tower[] allTowers = FindObjectsOfType<Tower>();
 
-        foreach (Tower tower in allTowers)
+        for (int i = 0; i < allTowers.Length; i++)
         {
-            ApplyUpgradeToTower(tower);
+            ApplyUpgradeToTower(allTowers[i]);
         }
     }
     public void SellTower(Tower tower)

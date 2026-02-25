@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f967e0620f730644a0d03461865813c, type: 3}
   m_Name: Stun
   m_EditorClassIdentifier: 
-  towerName: SpeedGroup
-  damage: 25
+  towerName: 
+  damage: 60
   fireRate: 1
-  range: 2
+  range: 1
   attackType: 3
-  effectValue: 0.5
-  explosionRadius: 2
-  enhancementCategory: 0
+  effectValue: 0.15
+  explosionRadius: 0
+  attribute: Stun

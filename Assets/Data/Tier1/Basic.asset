@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f967e0620f730644a0d03461865813c, type: 3}
   m_Name: Basic
   m_EditorClassIdentifier: 
-  towerName: RangeGroup
+  towerName: Basic
   damage: 50
   fireRate: 1
   range: 1
   attackType: 0
   effectValue: 0
   explosionRadius: 0
-  enhancementCategory: 2
+  attribute: Basic
