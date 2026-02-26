@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class Node : MonoBehaviour
@@ -10,11 +11,7 @@ public class Node : MonoBehaviour
 
     public GameObject tower; // 현재 이 자리에 세워진 타워
 
-    public bool isFull
-    {
-        get { return tower != null; }
-        set { /* 필요에 따라 구현 */ }
-    }
+    public bool isFull => tower != null;
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -27,15 +24,17 @@ public class Node : MonoBehaviour
     // 마우스를 클릭했을 때
     void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+        {
+            return;
+        }
         //타워가 이미 있다면
         if (isFull)
         {
-            Tower towerScript = tower.GetComponent<Tower>();
-
-            if (towerScript != null)
-            {
-                UIManager.instance.ShowTower(towerScript);
-            }
             return;
         }
         tower = BuildManager.instance.BuildTowerOnNode(transform.position, this);
@@ -48,7 +47,7 @@ public class Node : MonoBehaviour
     //마우스를 올리면 색이 변함
     void OnMouseEnter()
     {
-        if (rend != null)
+        if (rend != null && !isFull)
         {
             rend.color = hoverColor;
         }

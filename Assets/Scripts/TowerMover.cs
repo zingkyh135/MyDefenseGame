@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TowerMover : MonoBehaviour
 {
@@ -11,13 +12,18 @@ public class TowerMover : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if (UIManager.instance != null && tower != null) //만약 UIManager이 널이 아니고 타워도 널이 아닐때
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) 
+        { 
+            return; 
+        }
+
+        if (UIManager.instance != null && tower != null)
         {
             UIManager.instance.ShowTower(tower);
-
-        }
-        else
-        {
         }
     }
 }

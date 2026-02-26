@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1879862446581793796, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: towerName
-      value: Flower
+      value: Stun
       objectReference: {fileID: 0}
     - target: {fileID: 5603320579966459535, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: m_Name

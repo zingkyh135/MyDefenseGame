@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -43,16 +42,16 @@ public class SpawnManager : MonoBehaviour
             instance = this;
         }
     }
+    private void Start()
+    {
+        PrepareNextWave(firstWaveDelay);
+    }
     void PrepareNextWave(float delay)
     {
         isWaitingNextWave = true;
         waveWaitTimer = delay;
     }
 
-    private void Start()
-    {
-        PrepareNextWave(firstWaveDelay);
-    }
     void StartNewWave()
     {
         isWaitingNextWave = false;
@@ -67,7 +66,6 @@ public class SpawnManager : MonoBehaviour
                 currentWavePrefab = bossPrefabs[bossIndex];
             }
             monstersToSpawn = 1; //보스는 1마리
-            Debug.Log("보스 웨이브 시작");
         }
         else
         {
@@ -127,13 +125,18 @@ public class SpawnManager : MonoBehaviour
     }
     void SpawnMonster()
     {
-        if (currentWavePrefab == null || spawnPoint == null)
+        if (currentWavePrefab == null || spawnPoint == null || WaypointManager.instance == null)
         {
             return;
         }
 
-        GameObject waypointGroup = GameObject.Find("Waypoints");
-        Vector3 firstDest = waypointGroup.transform.GetChild(0).position;
+        Transform[] waypoints = WaypointManager.instance.waypoints;
+
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            return;
+        }
+        Vector3 firstDest = waypoints[0].position;
         Vector3 direction = (firstDest - spawnPoint.position).normalized;
         direction.z = 0;
         Quaternion spawnRotation = Quaternion.LookRotation(direction, Vector3.back);

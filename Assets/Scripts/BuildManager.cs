@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -40,11 +39,11 @@ public class BuildManager : MonoBehaviour
             GameObject towerBuild = null;
             float randomValue = Random.value;
 
-            if (randomValue < 0.70f)
+            if (randomValue < 0.84f)
             {
                 towerBuild = GetRandomList(tier1Towers); //70% È®·ü 1Æ¼¾î
             }
-            else if (randomValue < 0.95f)
+            else if (randomValue < 0.99f)
             {
                 towerBuild = GetRandomList(tier2Towers); //25% È®·ü 2Æ¼¾î
             }
@@ -105,7 +104,6 @@ public class BuildManager : MonoBehaviour
 
         if (tower.myNode != null)
         {
-            tower.myNode.isFull = false;
             tower.myNode.tower = null;
         }
 

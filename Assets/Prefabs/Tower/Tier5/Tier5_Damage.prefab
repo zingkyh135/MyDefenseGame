@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 1879862446581793796, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: d85572139040d614e81ec241862aafb4, type: 2}
+      objectReference: {fileID: 11400000, guid: 88975f54ef4884747a2fc775cf188147, type: 2}
     - target: {fileID: 1879862446581793796, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: tier
       value: 5
@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1879862446581793796, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: towerName
-      value: Flower
+      value: Damage
       objectReference: {fileID: 0}
     - target: {fileID: 5603320579966459535, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: m_Name
-      value: T_Tier5 _3
+      value: T_Tier5 _1
       objectReference: {fileID: 0}
     - target: {fileID: 6922191400406438775, guid: cfd7b055f48668f47a3acfe6b5901c8d, type: 3}
       propertyPath: m_LocalPosition.x

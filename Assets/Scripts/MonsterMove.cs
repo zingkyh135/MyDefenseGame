@@ -5,7 +5,8 @@ using UnityEngine;
 public class MonsterMove : MonoBehaviour
 {
     [Header("몬스터 설정")]
-    public int hp = 10; 
+    public int hp = 100;
+    public int maxHp;
     public float speed = 2f; //이속
 
     [Header("사망 시 분열 설정")]
@@ -28,6 +29,7 @@ public class MonsterMove : MonoBehaviour
     private void Awake()
     {
         defaultSpeed = speed; //초기 속도 저장
+        maxHp = hp;
     }
 
     public float GetDistanceTraveled()
@@ -134,24 +136,15 @@ public class MonsterMove : MonoBehaviour
 
     private void Start()
     {
-        //Waypoints 오브젝트 
-        GameObject waypointGroup = GameObject.Find("Waypoints");
-
-        if (waypointGroup != null)
+        if (WaypointManager.instance != null)
         {
-            //Point_ 개수만큼 배열 크기를 결정
-            waypoints = new Transform[waypointGroup.transform.childCount];
+            waypoints = WaypointManager.instance.waypoints;
+        }
 
-            //위치 정보를 하나씩 배열에 추가
-            for (int i = 0; i < waypointGroup.transform.childCount; i++)
-            {
-                waypoints[i] = waypointGroup.transform.GetChild(i);
-            }
-        }
-        else
+        if (waypoints == null || waypoints.Length == 0)
         {
+            Destroy(gameObject);
         }
-        //transform.rotation = Quaternion.Euler(0, 0, 180);
     }
     private void Update()
     {

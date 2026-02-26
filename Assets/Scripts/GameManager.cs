@@ -30,7 +30,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
     public int GetUpgradeLevel(string categoryName)
     {
