@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Field
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 7482667652216324306, guid: 32f040d79fc6225458f590dda539db5d, type: 3}
-  m_Color: {r: 0.062093254, g: 0.645283, b: 0.11034057, a: 1}
+  m_Sprite: {fileID: -1312077341, guid: 1ef6ed3ccce9acc45b2921d12771f8ec, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
