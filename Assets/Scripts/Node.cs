@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node : MonoBehaviour, IPointerClickHandler
 {
     public Color hoverColor = Color.cyan; // 마우스 올렸을 때 색상
     private Color startColor;
@@ -22,22 +22,19 @@ public class Node : MonoBehaviour
     }
 
     // 마우스를 클릭했을 때
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-        if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-        {
-            return;
-        }
-        //타워가 이미 있다면
         if (isFull)
         {
+            UIManager.instance.ShowTower(tower.GetComponent<Tower>());
             return;
         }
-        tower = BuildManager.instance.BuildTowerOnNode(transform.position, this);
+
+        GameObject newTower = BuildManager.instance.BuildTowerOnNode(transform.position, this);
+        if (newTower != null)
+        {
+            tower = newTower;
+        }
     }
     public void ClearNode()
     {

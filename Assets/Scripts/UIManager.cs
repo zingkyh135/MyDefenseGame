@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class UIManager : MonoBehaviour
     public GameObject upgradeChoicePanel;
     private string selectedCategory;
     private bool isSelectedDiamond;
+
+    [Header("일시정지창")]
+    public GameObject pausePanel;
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -113,7 +118,36 @@ public class UIManager : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
+    public void PauseGame()
+    {
+        if (pausePanel != null) pausePanel.SetActive(true);
+        Time.timeScale = 0f; 
+        isPaused = true;
+    }
 
+    public void ResumeGame()
+    {
+        if (pausePanel != null) pausePanel.SetActive(false);
+        Time.timeScale = 1f; 
+        isPaused = false;
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
